@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=https://schemas.pennsieve.io/app-manifest/v1.json
+# The app's manifest: what the App Store shows, and what a workflow needs to
+# run it. Publish an app in Pennsieve writes this file for you; edit it by
+# hand or in the app's page (Update in builder) later.
+schemaVersion: "1.0"
+application:
+  name: My App
+  description: What this app does, in a sentence or two.
+  type: processor
+  tags: []
+runtime:
+  cpu: 1024
+  memory: 2048
+  # Where a step may run. The image serves all of them (processor/entry.py):
+  #   standard  an ECS task; any size, any duration
+  #   lambda    a Lambda function: starts in seconds; up to 15 minutes, 10 GB
+  #   gpu       an ECS task on a GPU instance
+  computeTypes:
+    - standard
+parameters:
+  - name: EXAMPLE_PARAMETER
+    type: string
+    description: An example parameter, given to the app as an environment variable.
+    defaultValue: hello
+    required: false
+# What the app reads (INPUT_DIR) and writes (OUTPUT_DIR/<output>/).
+inputs:
+  - name: data
+    description: The files the app reads.
+    mediaTypes: []
+outputs:
+  - name: results
+    description: What the app writes.
+    mediaTypes: []
