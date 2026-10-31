@@ -32,3 +32,15 @@ outputs:
   - name: results
     description: What the app writes.
     mediaTypes: []
+
+# How a release is tested before it is made public: the inputs a review run uses
+# (app-deploy-service docs/app-manifest-review.md). A review runs the app on them
+# with no network and checks that every output receives files. Here: the files
+# in sample-input/. An app with a test fixture generator points at it instead:
+#   generate:
+#     command: python -m tests.make_fixture "$REVIEW_INPUT_DIR"
+review:
+  version: 1
+  inputs:
+    data:
+      files: [sample-input/*]
