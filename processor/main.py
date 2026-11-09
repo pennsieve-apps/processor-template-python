@@ -17,8 +17,6 @@ from datetime import datetime, timezone
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 log = logging.getLogger("app")
-# The Lambda runtime sets the root logger to WARNING before this runs.
-log.setLevel(logging.INFO)
 
 # The outputs declared in app.yml.
 OUTPUTS = ("results",)

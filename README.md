@@ -34,12 +34,19 @@ builder**).
 
 ## Runtimes
 
-The image serves every compute type (`processor/entry.py`): as an ECS task
-(`standard`, `gpu`) it runs `main()` once; as a Lambda function (`lambda`) it
-serves `processor/handler.py`, which sets the same variables from the
-function's payload and runs the same `main()`. Add `lambda` to
-`computeTypes` for an app that finishes within 15 minutes and 10 GB: it
-starts in seconds instead of the minute an ECS task takes.
+The image runs `main()` once, the same way on every compute type. As an ECS
+task (`standard`, `gpu`) it is run as is; as a Lambda step, Pennsieve's Lambda
+step runtime (added to every image the App Store builds) runs the same
+entrypoint with the same variables, so the app needs no Lambda-specific code.
+Don't base the image on an AWS Lambda base image or run `awslambdaric`: the
+build refuses those.
+
+`computeTypes` lists only `standard` and/or `gpu`. Pennsieve decides from
+`runtime` and the image whether a release also runs on Lambda, where a step
+starts in seconds instead of the minute an ECS task takes: up to 10 GB
+memory, 6 vCPU, `timeoutSeconds` of 900 and a 10 GB image. Set
+`optimize: false` to keep the app off Lambda. On Lambda the app may only write
+under `OUTPUT_DIR`, `HOME` and `TMPDIR`.
 
 ## Running it locally
 
