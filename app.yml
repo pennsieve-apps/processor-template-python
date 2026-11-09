@@ -11,10 +11,12 @@ application:
 runtime:
   cpu: 1024
   memory: 2048
-  # Where a step may run. The image serves all of them (processor/entry.py):
+  # Where a step may run:
   #   standard  an ECS task; any size, any duration
-  #   lambda    a Lambda function: starts in seconds; up to 15 minutes, 10 GB
   #   gpu       an ECS task on a GPU instance
+  # Pennsieve also runs the app as a Lambda step (starts in seconds) when it
+  # fits: up to 10 GB memory, 6 vCPU, 15 minutes and a 10 GB image. To opt
+  # out, set optimize: false.
   computeTypes:
     - standard
 parameters:
